@@ -1,0 +1,12 @@
+---
+tasks:
+- id: 1
+  title: Just a test
+  description: This is just my test task.
+- id: 2
+  title: New task 2
+  description: This is my second test task.
+- id: 3
+  title: 'My new task #3'
+  description: 'Yup #3 here!'
+total: 3
