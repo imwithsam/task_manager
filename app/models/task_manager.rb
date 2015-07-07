@@ -26,12 +26,26 @@ class TaskManager
     end
 
     def self.raw_task(id)
-      database.transaction do
-        database['tasks'].find { |task| task["id"] == id }
-      end
+      raw_tasks.find { |task| task["id"] == id }
     end
 
     def self.find(id)
       Task.new(raw_task(id))
+    end
+
+    def self.update(id, task)
+      database.transaction do
+        # Cannot call raw_task(id) because database.transaction returns a hash
+        target = database["tasks"].find { |row| row["id"] == id }
+        target["title"] = task[:title]
+        target["description"] = task[:description]
+      end
+    end
+
+    def self.delete(id)
+      database.transaction do
+        database["tasks"].delete_if { |task| task["id"] == id }
+        database['total'] -= 1
+      end
     end
 end
